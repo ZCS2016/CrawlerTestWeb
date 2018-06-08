@@ -17,7 +17,7 @@ export default new Router({
       name: 'PictureBox',
       component: PictureBox
     },{
-      path: '/PictureList/:page/:title',
+      path: '/PictureList/:page',
       name: 'PictureList',
       component: PictureList
     }

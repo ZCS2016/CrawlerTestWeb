@@ -3,7 +3,7 @@
 
       <ul v-for="pic in pics" style="margin: 0px">
         <li>
-          <img :src="pic.src" :alt="pic.title" style="width: 100%"/>
+          <img :id="pic.id" :src="pic.src" :alt="pic.title" style="width: 100%"/>
         </li>
       </ul>
 
@@ -17,10 +17,10 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App',
       page:'',
-      title:'',
+      id:'',
       pics: [],
       current:1,
-      size:10,
+      size:20,
       total:0
     }
   },
@@ -36,6 +36,8 @@ export default {
           this.total = res;
         });
 
+      this.current = Math.ceil(this.id/this.size);
+      var id = this.id;
       this.$http.get('http://172.27.49.66:8888/api/'+this.page+'/page',{
           params:{
             current:this.current,
@@ -44,24 +46,31 @@ export default {
         })
         .then(res => {
           this.pics = res;
-        });
+        }).then(
+          function () {
+            var topElement = document.getElementById(id);
+            window.scrollTo(topElement.x,topElement.y);
+          }
+      );
     },
     onPageNext() {
       if (this.current < this.totalPage) {
         this.current++;
         console.log("Page:" + this.current);
-        window.scrollTo(0,0);
         this.noticePage();
+        this.id = (this.current-1)*this.size + 1;
         this.loadData();
+        window.scrollTo(0,0);
       }
     },
     onPagePrevious(){
       if(this.current > 1) {
         this.current--;
         console.log("Page:" + this.current);
-        window.scrollTo(0,0);
         this.noticePage();
+        this.id = (this.current-1)*this.size + 1;
         this.loadData();
+        window.scrollTo(0,0);
       }
     },
     noticePage(){
@@ -73,7 +82,7 @@ export default {
   },
   mounted() {
     this.page = this.$route.params.page;
-    this.title = this.$route.params.title;
+    this.id = this.$store.state.PictureList.id;
     this.loadData();
 
     var hammertime = new Hammer(document.getElementById('PictureList'));
@@ -81,7 +90,6 @@ export default {
     hammertime.on('swipeleft',this.onPageNext);
 
     hammertime.on('swiperight',this.onPagePrevious);
-
   }
 }
 </script>
