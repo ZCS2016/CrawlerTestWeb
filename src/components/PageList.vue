@@ -22,7 +22,7 @@
       },
       methods:{
         loadData(){
-          this.$http.get('http://172.27.49.66:8888/api/PageList/all')
+          this.$http.get('http://172.27.49.77:8888/api/PageList/all')
             .then(res => {
               this.pageList = res;
             });

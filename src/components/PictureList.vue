@@ -31,14 +31,14 @@ export default {
   },
   methods:{
     loadData(){
-      this.$http.get('http://172.27.49.66:8888/api/'+this.page+'/total')
+      this.$http.get('http://172.27.49.77:8888/api/'+this.page+'/total')
         .then(res => {
           this.total = res;
         });
 
       this.current = Math.ceil(this.id/this.size);
       var id = this.id;
-      this.$http.get('http://172.27.49.66:8888/api/'+this.page+'/page',{
+      this.$http.get('http://172.27.49.77:8888/api/'+this.page+'/page',{
           params:{
             current:this.current,
             size:this.size
