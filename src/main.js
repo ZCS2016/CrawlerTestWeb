@@ -16,6 +16,7 @@ import Hammer from 'hammerjs'
 Vue.config.productionTip = false;
 Vue.use(Vuex);
 Vue.use(iView);
+
 // 挂载全局
 // ajax请求方法
 Vue.prototype.$http = httpRequest;
