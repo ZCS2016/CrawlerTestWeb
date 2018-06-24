@@ -28,6 +28,9 @@
   import 'moment/locale/zh-cn'
   moment.locale('zh-cn');
 
+  //const CrawlerHome = 'http://172.27.49.91:9999';
+  const CrawlerHome = 'http://192.168.2.123:9999';
+
   export default {
     name: "CrawlerHome",
     data(){
@@ -38,13 +41,13 @@
     },
     methods:{
       loadData() {
-        this.$http.get('http://172.27.49.91:9999/api/Crawler/jobs')
+        this.$http.get(CrawlerHome+'/api/Crawler/jobs')
           .then(res => {
             this.jobs = res;
           });
       },
       refreshJob(job){
-        this.$http.get('http://172.27.49.91:9999/api/Crawler/jobs/'+job.name)
+        this.$http.get(CrawlerHome+'/api/Crawler/jobs/'+job.name)
           .then(res => {
             for(var i = 0; i < this.jobs.length; i++){
               if(this.jobs[i].name == res.name){
@@ -72,7 +75,7 @@
             }
           }
 
-          this.$http.get('http://172.27.49.91:9999/api/Crawler/run/'+job.name)
+          this.$http.get(CrawlerHome+'/api/Crawler/run/'+job.name)
             .then(res => {
               this.timeoutId = setInterval(function () {
                 _this.refreshJob(job);

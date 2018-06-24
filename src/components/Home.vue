@@ -1,5 +1,5 @@
 <template>
-  <CrawlerHome/>
+  <WallpapersWideCategories/>
 </template>
 
 <script>
