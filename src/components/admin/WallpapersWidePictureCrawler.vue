@@ -9,12 +9,12 @@
               <div class="media-body">
                 <h6 class="mt-0 mb-1">{{ ChildCategory.title + '(' + ChildCategory.count + ')'}}
                   <Icon type="ios-checkmark-outline" color="#19be6b"></Icon>
-                  <Switch style="float: right"></Switch>
+                  <Switch v-model="ChildCategory.running" @on-change="runJob(ChildCategory)" style="float: right"></Switch>
                 </h6>
                 <span class="badge badge-success">
-                  Running({{ ChildCategory.count + '/' +ChildCategory.count }})
+                  Running({{ ChildCategory.current + '/' +ChildCategory.total }})
                 </span>
-                <Progress :percent="50"></Progress>
+                <Progress :percent="Math.ceil(ChildCategory.current*100/ChildCategory.total)"></Progress>
               </div>
             </li>
           </ul>
@@ -33,7 +33,8 @@
     name: "WallpapersWidePictureCrawler",
     data(){
       return {
-        Categories:[]
+        Categories:[],
+        timeoutId:null
       };
     },
     methods: {
@@ -60,6 +61,43 @@
                 this.$set(this.Categories,index,this.Categories[index]);
               });
             }
+        }
+      },
+      refreshJob(job){
+        this.$http.get(WallpapersWideCategoriesHome+'/api/Crawler/WallpapersWide/Categories/id/'+job.id)
+          .then(res => {
+            for(var i = 0; i < this.Categories.length; i++) {
+              if (this.Categories[i].ChildCategories) {
+                for (var j = 0; j < this.Categories[i].ChildCategories.length; j++) {
+                  if(this.Categories[i].ChildCategories[j].id == res.id){
+                    if(res.status == 'Complete'){
+                      clearInterval(this.timeoutId);
+                    }else{
+                      if(res.current == res.total){
+                        res.current = 0;
+                      }
+                    }
+                    this.$set(this.Categories[i].ChildCategories,j,res);
+                  }
+                }
+              }
+            }
+          });
+      },
+      runJob(job){
+        if(job.running){
+          var _this = this;
+
+          this.$Message.info('Start job: '+job.title);
+
+          this.$http.get(WallpapersWideCategoriesHome+'/api/Crawler/run/wallpaperListJob/'+job.id)
+            .then(res => {
+              this.timeoutId = setInterval(function () {
+                _this.refreshJob(job);
+              },1000);
+            });
+        }else{
+          this.$Message.info('Stop job: '+job.title);
         }
       }
     },

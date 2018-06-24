@@ -12,6 +12,9 @@
 </template>
 
 <script>
+  //const PictureBoxHome = 'http://172.27.49.91:8888';
+  const PictureBoxHome = 'http://192.168.2.123:8888';
+
   export default {
     name: 'PictureBox',
     data () {
@@ -31,14 +34,14 @@
     },
     methods:{
       loadData(){
-        this.$http.get('http://172.27.49.77:8888/api/'+this.page+'/total')
+        this.$http.get(PictureBoxHome+'/api/'+this.page+'/total')
           .then(res => {
             this.total = res;
           });
 
         const scrollX = this.$store.state.PictureBox.WindowLocation.x;
         const scrollY = this.$store.state.PictureBox.WindowLocation.y;
-        this.$http.get('http://172.27.49.77:8888/api/'+this.page+'/page',{
+        this.$http.get(PictureBoxHome+'/api/'+this.page+'/page',{
           params:{
             current:this.current,
             size:this.size

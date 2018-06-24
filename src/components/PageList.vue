@@ -13,28 +13,31 @@
 </template>
 
 <script>
-    export default {
-      name: "PageList",
-      data(){
-        return {
-          pageList:[]
-        };
+  //const PictureBoxHome = 'http://172.27.49.91:8888';
+  const PictureBoxHome = 'http://192.168.2.123:8888';
+
+  export default {
+    name: "PageList",
+    data(){
+      return {
+        pageList:[]
+      };
+    },
+    methods:{
+      loadData(){
+        this.$http.get(PictureBoxHome+'/api/PageList/all')
+          .then(res => {
+            this.pageList = res;
+          });
       },
-      methods:{
-        loadData(){
-          this.$http.get('http://172.27.49.77:8888/api/PageList/all')
-            .then(res => {
-              this.pageList = res;
-            });
-        },
-        onPageChange(title){
-          this.$router.push('/PictureBox/'+title);
-        }
-      },
-      mounted() {
-        this.loadData();
+      onPageChange(title){
+        this.$router.push('/PictureBox/'+title);
       }
+    },
+    mounted() {
+      this.loadData();
     }
+  }
 </script>
 
 <style scoped>
