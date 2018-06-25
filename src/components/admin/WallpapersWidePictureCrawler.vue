@@ -8,7 +8,7 @@
               <img class="mr-3" :src="ChildCategory.img" :alt="ChildCategory.title" width="35%">
               <div class="media-body">
                 <h6 class="mt-0 mb-1">{{ ChildCategory.title + '(' + ChildCategory.count + ')'}}
-                  <Icon type="ios-checkmark-outline" color="#19be6b"></Icon>
+                  <Icon v-show="ChildCategory.status == 'Complete'" type="ios-checkmark-outline" color="#19be6b"></Icon>
                   <Switch v-model="ChildCategory.running" @on-change="runJob(ChildCategory)" style="float: right"></Switch>
                 </h6>
                 <span class="badge badge-success">
@@ -25,10 +25,6 @@
 </template>
 
 <script>
-
-  //const WallpapersWideCategoriesHome = 'http://172.27.49.91:9999';
-  const WallpapersWideCategoriesHome = 'http://192.168.2.123:9999';
-
   export default {
     name: "WallpapersWidePictureCrawler",
     data(){
@@ -39,7 +35,7 @@
     },
     methods: {
       loadData() {
-        this.$http.get(WallpapersWideCategoriesHome+'/api/Crawler/WallpapersWide/Categories/level/0/-1')
+        this.$http.get('/api/Crawler/WallpapersWide/Categories/level/0/-1')
           .then(res => {
             this.Categories = res;
           });
@@ -49,7 +45,7 @@
           var index = parseInt(event[i]);
           var parentId = index+1;
           if(!this.Categories[index].ChildCategories){
-            this.$http.get(WallpapersWideCategoriesHome+'/api/Crawler/WallpapersWide/Categories/level/1/'+parentId)
+            this.$http.get('/api/Crawler/WallpapersWide/Categories/level/1/'+parentId)
               .then(res => {
                 console.log('Loading Categories: '+parentId);
                 if(res.length == 0){
@@ -64,7 +60,7 @@
         }
       },
       refreshJob(job){
-        this.$http.get(WallpapersWideCategoriesHome+'/api/Crawler/WallpapersWide/Categories/id/'+job.id)
+        this.$http.get('/api/Crawler/WallpapersWide/Categories/id/'+job.id)
           .then(res => {
             for(var i = 0; i < this.Categories.length; i++) {
               if (this.Categories[i].ChildCategories) {
@@ -78,6 +74,7 @@
                       }
                     }
                     this.$set(this.Categories[i].ChildCategories,j,res);
+                    this.$set(this.Categories,i,this.Categories[i]);
                   }
                 }
               }
@@ -90,7 +87,7 @@
 
           this.$Message.info('Start job: '+job.title);
 
-          this.$http.get(WallpapersWideCategoriesHome+'/api/Crawler/run/wallpaperListJob/'+job.id)
+          this.$http.get('/api/Crawler/run/wallpaperListJob/'+job.id)
             .then(res => {
               this.timeoutId = setInterval(function () {
                 _this.refreshJob(job);

@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
+import PictureBox from '@/components/PictureBox'
+import PictureList from '@/components/PictureList'
 import CrawlerHome from '@/components/admin/CrawlerHome'
 import WallpapersWidePictureCrawler from '@/components/admin/WallpapersWidePictureCrawler'
-import PictureList from '@/components/PictureList'
-import PictureBox from '@/components/PictureBox'
+import WallpapersWidePictureBox from '@/components/WallpapersWidePictureBox'
+import WallpapersWidePictureList from '@/components/WallpapersWidePictureList'
 
 Vue.use(Router);
 
@@ -15,6 +17,14 @@ export default new Router({
       name: 'Home',
       component: Home
     },{
+      path: '/PictureBox/:page',
+      name: 'PictureBox',
+      component: PictureBox
+    },{
+      path: '/PictureList/:page',
+      name: 'PictureList',
+      component: PictureList
+    },{
       path: '/CrawlerHome',
       name: 'CrawlerHome',
       component: CrawlerHome
@@ -23,13 +33,13 @@ export default new Router({
       name: 'WallpapersWidePictureCrawler',
       component: WallpapersWidePictureCrawler
     },{
-      path: '/PictureBox/:page',
-      name: 'PictureBox',
-      component: PictureBox
+      path: '/WallpapersWidePictureBox/:categoriesId',
+      name: 'WallpapersWidePictureBox',
+      component: WallpapersWidePictureBox
     },{
-      path: '/PictureList/:page',
-      name: 'PictureList',
-      component: PictureList
+      path: '/WallpapersWidePictureList/:categoriesId/:wallpaperId',
+      name: 'WallpapersWidePictureList',
+      component: WallpapersWidePictureList
     }
   ]
 });

@@ -18,7 +18,6 @@ Vue.use(Vuex);
 Vue.use(iView);
 
 // 挂载全局
-// ajax请求方法
 Vue.prototype.$http = httpRequest;
 
 const store = new Vuex.Store({
@@ -31,7 +30,8 @@ const store = new Vuex.Store({
       current:1
     },
     PictureList:{
-      id:1
+      categoriesId:1,
+      wallpaperId:1
     }
   },
   mutations:{

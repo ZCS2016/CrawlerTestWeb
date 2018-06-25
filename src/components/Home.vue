@@ -1,5 +1,5 @@
 <template>
-  <PageList/>
+  <WallpapersWideCategories/>
 </template>
 
 <script>

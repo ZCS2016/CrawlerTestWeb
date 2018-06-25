@@ -6,7 +6,7 @@
           <div class="container">
             <div class="row">
               <div class="col-4" v-for="ChildCategory in Category.ChildCategories" style="padding: 0px">
-                <img :src="ChildCategory.img" :alt="ChildCategory.title" style="width: 100%"/>
+                <img :src="ChildCategory.img" :alt="ChildCategory.title" @click="onPageChange(ChildCategory.id)" style="width: 100%"/>
                 {{ ChildCategory.title + '(' + ChildCategory.count + ')'}}
               </div>
             </div>
@@ -18,10 +18,6 @@
 </template>
 
 <script>
-
-  //const WallpapersWideCategoriesHome = 'http://172.27.49.91:8888';
-  const WallpapersWideCategoriesHome = 'http://192.168.2.123:8888';
-
   export default {
     name: "WallpapersWideCategories",
     data(){
@@ -31,7 +27,7 @@
     },
     methods: {
       loadData() {
-        this.$http.get(WallpapersWideCategoriesHome+'/api/WallpapersWide/Categories/level/0/-1')
+        this.$http.get('/api/WallpapersWide/Categories/level/0/-1')
           .then(res => {
             this.Categories = res;
           });
@@ -41,7 +37,7 @@
           var index = parseInt(event[i]);
           var parentId = index+1;
           if(!this.Categories[index].ChildCategories){
-            this.$http.get(WallpapersWideCategoriesHome+'/api/WallpapersWide/Categories/level/1/'+parentId)
+            this.$http.get('/api/WallpapersWide/Categories/level/1/'+parentId)
               .then(res => {
                 console.log('Loading Categories: '+parentId);
                 if(res.length == 0){
@@ -54,6 +50,10 @@
               });
             }
         }
+      },
+      onPageChange(categoriesId){
+        console.log('To Categories: '+categoriesId);
+        this.$router.push('/WallpapersWidePictureBox/'+categoriesId);
       }
     },
     mounted() {

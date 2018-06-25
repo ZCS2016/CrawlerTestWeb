@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 const http = axios.create({
+  baseURL: 'http://172.27.49.91:9999',
   timeout: 1000 * 60,
   withCredentials: false,
   headers: {
