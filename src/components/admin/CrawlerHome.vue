@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Card v-for="job in jobs">
+    <Card v-show="job.name != 'wallpaperListJob'" v-for="job in jobs">
       <div slot="title">
         <h5>{{ job.name }}
           <span v-show="job.running" class="badge badge-success">
@@ -18,8 +18,20 @@
       <p>
         <Progress :percent="Math.ceil(job.current*100/job.total)"></Progress>
       </p>
-
     </Card>
+
+    <Card>
+      <div slot="title">
+        <h5>wallpaperListJob</h5>
+      </div>
+
+      <div>
+        <h6>
+          <router-link :to="'/WallpapersWidePictureCrawler'">wallpaperListJob</router-link>
+        </h6>
+      </div>
+    </Card>
+
   </div>
 </template>
 

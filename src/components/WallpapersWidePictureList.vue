@@ -60,6 +60,7 @@ export default {
               var topElement = document.getElementById(id);
               topElement.onload = function () {
                 window.scrollTo(topElement.x,topElement.y);
+                topElement.onload = null;
               };
             }
           );

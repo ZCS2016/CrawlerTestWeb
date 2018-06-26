@@ -41,6 +41,7 @@
           });
       },
       loadChildCategories(event){
+        console.log(event);
         for(var i=0;i<event.length;i++){
           var index = parseInt(event[i]);
           var parentId = index+1;
@@ -56,7 +57,7 @@
                 }
                 this.$set(this.Categories,index,this.Categories[index]);
               });
-            }
+          }
         }
       },
       refreshJob(job){

@@ -7,7 +7,7 @@
             <div class="row">
               <div class="col-4" v-for="ChildCategory in Category.ChildCategories" style="padding: 0px">
                 <img :src="ChildCategory.img" :alt="ChildCategory.title" @click="onPageChange(ChildCategory.id)" style="width: 100%"/>
-                {{ ChildCategory.title + '(' + ChildCategory.count + ')'}}
+                {{ ChildCategory.title }}<span class="badge" :class="{'badge-success':ChildCategory.status == 'Complete'}">{{ ChildCategory.count }}</span>
               </div>
             </div>
           </div>
