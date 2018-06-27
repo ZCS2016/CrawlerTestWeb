@@ -9,6 +9,8 @@ const http = axios.create({
   }
 });
 
+http.baseURL = 'http://172.27.49.91:9999';
+
 http.interceptors.response.use(res =>{
   return res.data;
 });

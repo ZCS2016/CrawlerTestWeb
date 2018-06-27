@@ -3,7 +3,7 @@
 
       <ul v-for="pic in pics" style="margin: 0px">
         <li>
-          <img :id="pic.id" :src="pic.imgHD" :alt="pic.title" style="width: 100%"/>
+          <img :id="pic.id" :src="imgURL(pic.hash)" :alt="pic.title" style="width: 100%"/>
         </li>
       </ul>
 
@@ -100,6 +100,9 @@ export default {
         content:'Page:'+this.current+'/'+this.totalPage,
         duration:1
       });
+    },
+    imgURL(hash){
+      return this.$http.baseURL + '/api/Picture/' + hash +'-FHD.jpg';
     }
   },
   mounted() {

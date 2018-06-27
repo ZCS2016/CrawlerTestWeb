@@ -1,9 +1,9 @@
 <template>
     <Collapse @on-change="loadChildCategories">
-      <Panel v-for="Category in Categories" style="padding: 0px">
+      <Panel v-for="(Category,index) in Categories" :name="index+''" style="padding: 0px">
         {{ Category.title + '(' + Category.count + ')' }}
         <div slot="content">
-          <ul class="list-unstyled" v-for="ChildCategory in Category.ChildCategories" style="padding: 0px; margin: 0px">
+          <ul class="list-unstyled" v-for="ChildCategory in Category.childrenCategories" style="padding: 0px; margin: 0px">
             <li class="media">
               <img class="mr-3" :src="ChildCategory.img" :alt="ChildCategory.title" width="35%">
               <div class="media-body">
@@ -41,19 +41,18 @@
           });
       },
       loadChildCategories(event){
-        console.log(event);
         for(var i=0;i<event.length;i++){
           var index = parseInt(event[i]);
           var parentId = index+1;
-          if(!this.Categories[index].ChildCategories){
+          if(this.Categories[index].childrenCategories.length == 0){
             this.$http.get('/api/Crawler/WallpapersWide/Categories/level/1/'+parentId)
               .then(res => {
                 console.log('Loading Categories: '+parentId);
                 if(res.length == 0){
-                  this.Categories[index].ChildCategories = [];
-                  this.Categories[index].ChildCategories.push(this.Categories[index]);
+                  this.Categories[index].childrenCategories = [];
+                  this.Categories[index].childrenCategories.push(this.Categories[index]);
                 }else{
-                  this.Categories[index].ChildCategories = res;
+                  this.Categories[index].childrenCategories = res;
                 }
                 this.$set(this.Categories,index,this.Categories[index]);
               });
@@ -64,9 +63,9 @@
         this.$http.get('/api/Crawler/WallpapersWide/Categories/id/'+job.id)
           .then(res => {
             for(var i = 0; i < this.Categories.length; i++) {
-              if (this.Categories[i].ChildCategories) {
-                for (var j = 0; j < this.Categories[i].ChildCategories.length; j++) {
-                  if(this.Categories[i].ChildCategories[j].id == res.id){
+              if (this.Categories[i].childrenCategories) {
+                for (var j = 0; j < this.Categories[i].childrenCategories.length; j++) {
+                  if(this.Categories[i].childrenCategories[j].id == res.id){
                     if(res.status == 'Complete'){
                       clearInterval(this.timeoutId);
                     }else{
@@ -74,7 +73,7 @@
                         res.current = 0;
                       }
                     }
-                    this.$set(this.Categories[i].ChildCategories,j,res);
+                    this.$set(this.Categories[i].childrenCategories,j,res);
                     this.$set(this.Categories,i,this.Categories[i]);
                   }
                 }

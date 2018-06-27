@@ -49,7 +49,6 @@
           this.pics = res;
         }).then(
           function () {
-            console.log(scrollX,scrollY);
             window.scrollTo(scrollX,scrollY);
           }
         );

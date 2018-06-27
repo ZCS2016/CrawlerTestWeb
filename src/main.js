@@ -32,6 +32,13 @@ const store = new Vuex.Store({
     PictureList:{
       categoriesId:1,
       wallpaperId:1
+    },
+    WallpapersWideCategories:{
+      WindowLocation:{
+        x:0,
+        y:0
+      },
+      OpenPanels:[]
     }
   },
   mutations:{
@@ -41,6 +48,14 @@ const store = new Vuex.Store({
     },
     setPictureList(state,params){
       state.PictureList.id = params.id;
+    },
+    setWallpapersWideCategories(state,params){
+      if(params.WindowLocation){
+        state.WallpapersWideCategories.WindowLocation = params.WindowLocation;
+      }
+      if(params.OpenPanels){
+        state.WallpapersWideCategories.OpenPanels = params.OpenPanels;
+      }
     }
   }
 });
