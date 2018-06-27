@@ -1,7 +1,7 @@
 <template>
   <div id="WallpapersWidePictureCarousel">
 
-    <Carousel v-model="index" dots="none" arrow="never">
+    <Carousel v-model="index" dots="none" @on-change="onPageChange">
       <CarouselItem v-for="pic in pics" >
         <img :id="pic.id" :src="imgURL(pic.hash)" :alt="pic.title" style="width: 100%"/>
       </CarouselItem>
@@ -55,8 +55,7 @@
             })
             .then(res => {
               this.pics = res;
-            })
-            .then(res => {
+
               this.index = this.getIndex();
               console.log('index:'+this.index);
             });
@@ -73,15 +72,38 @@
             this.pics = res;
           });
       },
-      onPageNext() {
-        if (this.index < this.size) {
-          this.index++;
+      onPageChange(oldIndex,index){
+        console.log('oldIndex:' + oldIndex + ' index:' + index);
+
+        if(oldIndex == 0 && index == this.size -1){
+          if(this.current > 1){
+            this.current--;
+            console.log("Page:" + this.current);
+            this.noticePage();
+            this.loadPageData();
+            this.index = index;
+          }else{
+            this.index = 0;
+          }
+        }else if(oldIndex == this.size -1 && index == 0){
+          if(this.current < this.totalPage){
+            this.current++;
+            console.log("Page:" + this.current);
+            this.noticePage();
+            this.loadPageData();
+            this.index = index;
+          }else{
+            this.index = this.size -1;
+          }
+        }else{
+          this.index = index;
         }
       },
+      onPageNext() {
+        this.onPageChange(this.index, (this.index + 1) % this.size);
+      },
       onPagePrevious(){
-        if(this.index > 1) {
-          this.index--;
-        }
+        this.onPageChange(this.index, (this.index - 1 + this.size) % this.size);
       },
       noticePage(){
         this.$Message.info({
@@ -93,10 +115,12 @@
         return this.$http.baseURL + '/api/Picture/' + hash +'-FHD.jpg';
       },
       getIndex(){
+        console.log('getIndex()');
         let _index = 0;
         for(let i = 0; i < this.pics.length; i++){
-          if(this.pics[i].id == this.categoriesId){
+          if(this.pics[i].id == this.wallpaperId){
             _index = i;
+            console.log('Found index:' + i);
             break;
           }
         }
