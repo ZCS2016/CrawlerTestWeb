@@ -3,7 +3,7 @@
 
       <ul v-for="pic in pics" style="margin: 0px">
         <li>
-          <img :id="pic.id" :src="imgURL(pic.hash)" :alt="pic.title" style="width: 100%"/>
+          <img :id="pic.id" :src="imgURL(pic.hash)" :alt="pic.title" style="width: 100%" @click="onPictureClicked(categoriesId,pic.id)"/>
         </li>
       </ul>
 
@@ -103,6 +103,9 @@ export default {
     },
     imgURL(hash){
       return this.$http.baseURL + '/api/Picture/' + hash +'-FHD.jpg';
+    },onPictureClicked(categoriesId,wallpaperId){
+      console.log('To WallpapersWidePictureCarousel:'+this.categoriesId+"\t"+wallpaperId);
+      this.$router.push('/WallpapersWidePictureCarousel/'+this.categoriesId+'/'+wallpaperId);
     }
   },
   mounted() {
@@ -111,9 +114,7 @@ export default {
     this.loadData();
 
     var hammertime = new Hammer(document.getElementById('WallpapersWidePictureList'));
-
     hammertime.on('swipeleft',this.onPageNext);
-
     hammertime.on('swiperight',this.onPagePrevious);
   }
 }

@@ -7,6 +7,7 @@ import CrawlerHome from '@/components/admin/CrawlerHome'
 import WallpapersWidePictureCrawler from '@/components/admin/WallpapersWidePictureCrawler'
 import WallpapersWidePictureBox from '@/components/WallpapersWidePictureBox'
 import WallpapersWidePictureList from '@/components/WallpapersWidePictureList'
+import WallpapersWidePictureCarousel from '@/components/WallpapersWidePictureCarousel'
 
 Vue.use(Router);
 
@@ -40,6 +41,10 @@ export default new Router({
       path: '/WallpapersWidePictureList/:categoriesId/:wallpaperId',
       name: 'WallpapersWidePictureList',
       component: WallpapersWidePictureList
+    },{
+      path: '/WallpapersWidePictureCarousel/:categoriesId/:wallpaperId',
+      name: 'WallpapersWidePictureCarousel',
+      component: WallpapersWidePictureCarousel
     }
   ]
 });

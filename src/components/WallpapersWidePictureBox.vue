@@ -92,7 +92,7 @@
         });
       },
       onPictureClicked(categoriesId,wallpaperId){
-        console.log('To PictureList:'+this.categoriesId+"\t"+wallpaperId);
+        console.log('To WallpapersWidePictureList:'+this.categoriesId+"\t"+wallpaperId);
         this.$store.commit({
           type:'setPictureBox',
           WindowLocation:{
@@ -115,11 +115,8 @@
       this.loadData();
 
       var hammertime = new Hammer(document.getElementById('PictureBox'));
-
       hammertime.on('swipeleft',this.onPageNext);
-
       hammertime.on('swiperight',this.onPagePrevious);
-
     }
   }
 </script>
