@@ -96,7 +96,9 @@
             this.index = this.size -1;
           }
         }else{
-          this.index = index;
+          if(index < this.pics.length){
+            this.index = index;
+          }
         }
       },
       onPageNext() {
