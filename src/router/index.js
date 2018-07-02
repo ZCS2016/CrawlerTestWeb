@@ -8,6 +8,7 @@ import WallpapersWidePictureCrawler from '@/components/admin/WallpapersWidePictu
 import WallpapersWidePictureBox from '@/components/WallpapersWidePictureBox'
 import WallpapersWidePictureList from '@/components/WallpapersWidePictureList'
 import WallpapersWidePictureCarousel from '@/components/WallpapersWidePictureCarousel'
+import GameWallpaperCategories from '@/components/GameWallpaperCategories'
 
 Vue.use(Router);
 
@@ -45,6 +46,10 @@ export default new Router({
       path: '/WallpapersWidePictureCarousel/:categoriesId/:wallpaperId',
       name: 'WallpapersWidePictureCarousel',
       component: WallpapersWidePictureCarousel
+    },{
+      path: '/GameWallpaperCategories',
+      name: 'GameWallpaperCategories',
+      component: GameWallpaperCategories
     }
   ]
 });
