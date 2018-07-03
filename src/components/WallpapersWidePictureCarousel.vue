@@ -17,7 +17,7 @@
       return {
         msg: 'Welcome to Your Vue.js App',
         categoriesId: -1,
-        categories: null,
+        Categories: null,
         wallpaperId: -1,
         wallpaper: null,
         pics: [],
@@ -37,7 +37,7 @@
         this.$http.get('/api/WallpapersWide/Categories/'+this.categoriesId)
           .then(res => {
             this.categories = res;
-            this.total = this.categories.count;
+            this.total = this.Categories.count;
           });
 
         this.$http.get('/api/WallpapersWide/Wallpaper/'+this.wallpaperId)

@@ -18,7 +18,7 @@
       return {
         msg: 'Welcome to Your Vue.js App',
         categoriesId:-1,
-        categories:null,
+        Categories:null,
         pics: [],
         current:1,
         size:60,
@@ -35,7 +35,7 @@
         this.$http.get('/api/WallpapersWide/Categories/'+this.categoriesId)
           .then(res => {
             this.categories = res;
-            this.total = this.categories.count;
+            this.total = this.Categories.count;
           });
 
         const scrollX = this.$store.state.PictureBox.WindowLocation.x;

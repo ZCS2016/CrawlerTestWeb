@@ -22,7 +22,7 @@
 
 <script>
   export default {
-    name: "GameWallpaperCategories",
+    name: "CGWallpaperCategories",
     data(){
       return {
         Categories:[],
@@ -40,9 +40,9 @@
         this.Categories = this.Categories;
 
         const _this = this;
-        const OpenPanels = this.$store.state.GameWallpaperCategories.OpenPanels;
-        const scrollX = this.$store.state.GameWallpaperCategories.WindowLocation.x;
-        const scrollY = this.$store.state.GameWallpaperCategories.WindowLocation.y;
+        const OpenPanels = this.$store.state.CGWallpaperCategories.OpenPanels;
+        const scrollX = this.$store.state.CGWallpaperCategories.WindowLocation.x;
+        const scrollY = this.$store.state.CGWallpaperCategories.WindowLocation.y;
 
         console.log('OpenPanels:'+OpenPanels);
         this.loadChildCategories(OpenPanels);
@@ -59,7 +59,7 @@
       },
       loadChildCategories(event){
         this.$store.commit({
-          type:'setGameWallpaperCategories',
+          type:'setCGWallpaperCategories',
           OpenPanels:event
         });
 
@@ -67,7 +67,7 @@
           for(let j=0; j < this.Categories.length; j++){
             if(event[i] == this.Categories[j].name) {
               if (!this.Categories[j].ChildrenCategories) {
-                this.$http.get('/api/GameWallpaper/Categories/' + this.Categories[j].name)
+                this.$http.get('/api/CGWallpaper/Categories/' + this.Categories[j].name)
                   .then(res => {
                     this.Categories[j].ChildrenCategories = res;
                     this.$set(this.Categories,j,this.Categories[j]);
@@ -84,13 +84,13 @@
       onPageChange(categoriesId){
         console.log('To Categories: '+categoriesId);
         this.$store.commit({
-          type:'setGameWallpaperCategories',
+          type:'setCGWallpaperCategories',
           WindowLocation:{
             x:window.scrollX,
             y:window.scrollY
           }
         });
-        this.$router.push('/GameWallpaperPictureList/'+categoriesId);
+        this.$router.push('/CGWallpaperPictureList/'+categoriesId);
       }
     },
     mounted(){

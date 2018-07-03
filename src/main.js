@@ -39,6 +39,20 @@ const store = new Vuex.Store({
         y:0
       },
       OpenPanels:[]
+    },
+    GameWallpaperCategories:{
+      WindowLocation:{
+        x:0,
+        y:0
+      },
+      OpenPanels:[]
+    },
+    CGWallpaperCategories:{
+      WindowLocation:{
+        x:0,
+        y:0
+      },
+      OpenPanels:[]
     }
   },
   mutations:{
@@ -55,6 +69,22 @@ const store = new Vuex.Store({
       }
       if(params.OpenPanels){
         state.WallpapersWideCategories.OpenPanels = params.OpenPanels;
+      }
+    },
+    setGameWallpaperCategories(state,params){
+      if(params.WindowLocation){
+        state.GameWallpaperCategories.WindowLocation = params.WindowLocation;
+      }
+      if(params.OpenPanels){
+        state.GameWallpaperCategories.OpenPanels = params.OpenPanels;
+      }
+    },
+    setCGWallpaperCategories(state,params){
+      if(params.WindowLocation){
+        state.CGWallpaperCategories.WindowLocation = params.WindowLocation;
+      }
+      if(params.OpenPanels){
+        state.CGWallpaperCategories.OpenPanels = params.OpenPanels;
       }
     }
   }
