@@ -49,12 +49,12 @@
 
         window.setTimeout(function () {
           _this.OpenPanels = OpenPanels;
-        },15);
+        },10);
 
         window.setTimeout(function () {
           console.log('scrollTo:'+scrollX+' '+scrollY);
           window.scrollTo(scrollX,scrollY);
-        },35);
+        },1000);
 
       },
       loadChildCategories(event){
@@ -82,7 +82,8 @@
         return this.$http.baseURL + '/api/Picture/' + hash +'.jpg';
       },
       onPageChange(categoriesId){
-        console.log('To Categories: '+categoriesId);
+        console.log('To Categories: ' + categoriesId);
+        console.log('Saved x: ' + window.scrollX +' y: ' + window.scrollY);
         this.$store.commit({
           type:'setGameWallpaperCategories',
           WindowLocation:{

@@ -1,5 +1,5 @@
 <template>
-  <CGWallpaperCategories/>
+  <GameWallpaperCategories/>
 </template>
 
 <script>
